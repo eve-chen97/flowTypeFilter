@@ -64,7 +64,47 @@
 #'`Methods == 'Filters'`
 #'
 #'@param ... For mclapply, optional arguments.
-
+#'
+#'@return New`PhenoType`object contation
+#'`CellFreqs`: Object of class `Numeric` containing the cell frequencies
+#'measured for each phenotype. Phenotype names are assigned as labels.
+#'
+#'@examples
+#'##Load the library
+#'library(flowTypeFilter)
+#'data(DLBCLExample)
+#'
+#'##These markers will be analyzed
+#'PropMarkers <- 3:5
+#'MFIMarkers <- PropMarkers
+#'MarkerNames <- c('FS', 'SS','CD3','CD5','CD19')
+#'
+#'##Run flowTypeFilter
+#'Res <- flowTypeFilter(DLBCLExample, PropMarkers, MFIMarkers, 'kmeans',
+#'MarkerNames);
+#'
+#'MFIs=Res@MFIs;
+#'Proportions=Res@CellFreqs;
+#'Proportions <- Proportions / max(Proportions)
+#'names(Proportions) <- unlist(lapply(Res@PhenoCodes,
+#'                                    function(x){return(decodePhenotype(
+#'                                    x,Res@MarkerNames[PropMarkers],
+#'                                    Res@PartitionsPerMarker))}))
+#'
+#'##Select the 30 largest phenotypes
+#'index=order(Proportions,decreasing=TRUE)[1:30]
+#'bp=barplot(Proportions[index], axes=FALSE, names.arg=FALSE)
+#'text(bp+0.2, par("usr")[3]+0.02, srt = 90, adj = 0,
+#'labels = names(Proportions[index]), xpd = TRUE, cex=0.8)
+#'axis(2);
+#'axis(1, at=bp, labels=FALSE);
+#'title(xlab='Phenotype Names', ylab='Cell Proportion')
+#'
+#'##These phenotype can be analyzed using a predictive model
+#'(e.g., classification or regression)
+#'}
+#'
+#' @export
 
 flowTypeFilter <- function(Frame,
                            PropMarkers=NULL,

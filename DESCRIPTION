@@ -9,7 +9,13 @@ Description: flowTypeFilter uses a simple threshold,polygone filters, Kmeans,
     flowMeans or flowClust to split every channel to a multiple partitions. 
     These partitions are then combined to generate a set of multi-dimensional 
     phenotypes.
+Imports: Biobase, graphics, grDevices, methods, flowCore, flowMeans,
+        sfsmisc, rrcov, flowClust, flowMerge, stats
+Depends: R (>= 2.10), Rcpp (>= 0.10.4), BH (>= 1.51.0-3)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
