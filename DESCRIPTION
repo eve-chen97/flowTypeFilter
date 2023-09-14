@@ -1,12 +1,15 @@
 Package: flowTypeFilter
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Title: Phenotyping Flow Cytometry Assays
+Version: 0.1.0
+Authors@R: Nima Aghaeepour, Kieran O'Neill, Adrin Jalali, 
+      Yixuan Chen <evechen97@gmail.com>
+Maintainer: Nima Aghaeepour <naghaeep@gmail.com>, 
+      Yixuan Chen <evechen97@gmail.com>
+Description: flowTypeFilter uses a simple threshold,polygone filters, Kmeans, 
+    flowMeans or flowClust to split every channel to a multiple partitions. 
+    These partitions are then combined to generate a set of multi-dimensional 
+    phenotypes.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
