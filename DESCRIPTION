@@ -1,8 +1,10 @@
 Package: flowTypeFilter
 Title: Phenotyping Flow Cytometry Assays
 Version: 0.1.0
-Authors@R: Nima Aghaeepour, Kieran O'Neill, Adrin Jalali, 
-      Yixuan Chen <evechen97@gmail.com>
+Authors@R: c(person("Nima", "Aghaeepour", email = "naghaeep@gmail.com", role = c("aut", "cre")),
+             person("Kieran", "O'Neill", role = "aut"),
+             person("Adrin", "Jalali", role = "aut"),
+             person("Yixuan", "Chen", email = "evechen97@gmail.com", role = "aut"))
 Maintainer: Nima Aghaeepour <naghaeep@gmail.com>, 
       Yixuan Chen <evechen97@gmail.com>
 Description: flowTypeFilter uses a simple threshold,polygone filters, Kmeans, 
