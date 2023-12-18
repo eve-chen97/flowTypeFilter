@@ -1,14 +1,16 @@
 // [[Rcpp::depends(BH)]]
 
+#include <boost/geometry.hpp>
 #include "numberGenerator.h"
 #include "exceptions.h"
 #include <vector>
 #include <map>
 #include <boost/dynamic_bitset.hpp>
-#include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 #include <iostream>
+#include <set>
+#include <list>
 #include <string>
 #include <cstring>
 #include <fstream>
@@ -19,7 +21,7 @@
 using namespace std;
 using namespace tfl;
 using namespace boost;
-using namespace Rcpp ;
+using namespace Rcpp;
 namespace bg = boost::geometry;
 
 
@@ -96,9 +98,9 @@ bool is_in_filter(const double data_x, const double data_y, const vector<double>
   {
     return in_poly;
   }
-  else if (segment >= 2)
+  else if (segment > 2)
   {
-    throw "Cannot split data to more than 2, when polygone filter is provided.";
+    throw "Cannot split data to more than 2, when polygon filter is provided.";
   }
   throw "can not happen!";
 }

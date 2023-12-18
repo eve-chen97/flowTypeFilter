@@ -1,7 +1,7 @@
 #include <vector>
 #include <math.h>
 #include "countsAndMeans.h"
-#include "flowTypeFilterC.h"
+#include "flowTypeFilter.h"
 #include <iostream>
 #include <R_ext/Print.h>
 #include <Rcpp.h>

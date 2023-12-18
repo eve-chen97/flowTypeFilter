@@ -15,6 +15,7 @@ Imports: Rcpp, Biobase, graphics, grDevices, methods, flowCore, flowMeans,
         sfsmisc, rrcov, flowClust, flowMerge, stats
 LinkingTo: Rcpp
 Depends: R (>= 2.10), Rcpp (>= 0.10.4), BH (>= 1.51.0-3)
+SystemRequirements: C++14
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
