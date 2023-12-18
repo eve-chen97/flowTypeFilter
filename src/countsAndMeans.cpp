@@ -74,7 +74,7 @@ bool is_in_filter(const double data_x, const double data_y, const vector<double>
 
   //convert the vector of double from threshold into a vector of points
   std::vector<point_type> points;
-  for (int i = 0; i < poly_points.size()/2; i++)
+  for (size_t i = 0; i < poly_points.size() / 2; i++)
   {
     // poly_point contains 2 columns of data
     // point_type(x, y)
@@ -124,7 +124,7 @@ dynamic_bitset<> terminal_phenotype(
 {
   dynamic_bitset<> result(data_count);
   int marker = -1;
-  for (register int i = 0; i < marker_count; i++)
+  for (int i = 0; i < marker_count; i++)
   {
     if (phenotype[i])
     {
@@ -141,7 +141,7 @@ dynamic_bitset<> terminal_phenotype(
   if (gate_ind == -1) //only thresholds
   {
     //determine which threshold segment are the events in (smaller or bigger than threshold)
-    for (register int i = 0; i < data_count; i++)
+    for (int i = 0; i < data_count; i++)
     {
       // marker columns in data (extrated by PropMarkers) are in the same order as in thresholds
       result[i] = (is_in_range(data[marker * data_count + i], thresholds[marker], marker_value, base[marker] - 1) ? 1 : 0);
@@ -151,7 +151,7 @@ dynamic_bitset<> terminal_phenotype(
   {
     if (marker < gate_ind) // this marker use threshold
     {
-      for (register int j = 0; j < data_count; j++)
+      for (int j = 0; j < data_count; j++)
       {
         int col = thresChannels[marker]-1; //which column of data should we extract
         result[j] = (is_in_range(data[col * data_count + j], thresholds[marker], marker_value, base[marker] - 1) ? 1 : 0);
@@ -161,7 +161,7 @@ dynamic_bitset<> terminal_phenotype(
     {
       //determine which gate segment are the events in (in or out of the polygon)
       int gate_id = marker - gate_ind;  //which gate it is
-      for (register int j = 0; j < data_count; j++)
+      for (int j = 0; j < data_count; j++)
       {
         //which columns of data should we extract
         int col_x = thresChannels[gate_ind + gate_id * 2] -1;
