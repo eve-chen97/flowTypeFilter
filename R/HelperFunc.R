@@ -1,5 +1,5 @@
-#Author: Mehrnoush Malek  
-#Date Modified: Oct 19,2017
+#Author: Mehrnoush Malek，Yixuan Chen
+#Date Modified: Feb 4, 2020
 #R source code for calculating counts for all permutation, when thresholds are filters
 
 
@@ -50,14 +50,14 @@ is.in.range <- function(vect,threshold, segment)
   segment<-as.numeric(segment)
   if (segment == 1)
   {
-    
+
     return (vect <= threshold[1])
   }
   else
   {
     return(vect> threshold[(segment-1)])
   }
-  
+
 }
 
 
@@ -71,37 +71,37 @@ is.in.filter <- function(mat,threshold, segment)
   if (segment==2)
     return(pts!=0)
   if (segment > 2)
-    stop("Cannot split data to more than 2, when polygone filter is provided.")
+    stop("Cannot split data to more than 2, when polygon filter is provided.")
 }
 
 #####
 #terminalphenotype<-function(phenotype, data,Thresholds)
-  
+
 #{
-  
-  
- # ind <- rep(T, nrow(data))
-  #phenotype2<-unlist(strsplit(phenotype,split=""))
-  ###Indices problem
-  #p1<-which(phenotype2!="0")
-  #if (length(p1)<1)
-   # stop("Something is wrong with coding partitions.")
-    #  if (names(Thresholds)[p1]=="gate")
-     # {
-      #  ind <- is.in.filter(mat=data[,colnames(Thresholds[[p1]])],threshold = Thresholds[[p1]],segment =  phenotype2[p1])
-      #}else{
-       # ind <- is.in.range(vect= data[,names(Thresholds)[p1]],threshold = as.vector(Thresholds[[p1]]), segment = phenotype2[p1])
-      #}
-  #return(ind)
+
+
+# ind <- rep(T, nrow(data))
+#phenotype2<-unlist(strsplit(phenotype,split=""))
+###Indices problem
+#p1<-which(phenotype2!="0")
+#if (length(p1)<1)
+# stop("Something is wrong with coding partitions.")
+#  if (names(Thresholds)[p1]=="gate")
+# {
+#  ind <- is.in.filter(mat=data[,colnames(Thresholds[[p1]])],threshold = Thresholds[[p1]],segment =  phenotype2[p1])
+#}else{
+# ind <- is.in.range(vect= data[,names(Thresholds)[p1]],threshold = as.vector(Thresholds[[p1]]), segment = phenotype2[p1])
+#}
+#return(ind)
 #}
 
 terminalphenotype<-function(phenotype, data,Thresholds)
-  
+
 {
-  
-  
+
+
   ind <- rep(T, nrow(data))
-  phenotype2 <- unlist(strsplit(phenotype,split=""))
+  phenotype2<-unlist(strsplit(phenotype,split=""))
   ###Indices problem
   p1<-which(phenotype2!="0")
   if (length(p1)<1)
@@ -118,7 +118,7 @@ terminalphenotype<-function(phenotype, data,Thresholds)
 
 count.cells <-function(Thresholds,PartitionsPerMarker,MaxMarkersPerPop,EXPRS,cores,verbose,...)
 {
-  
+
   l<- length(Thresholds)
   pops <- as.matrix(PopsGenerator(l,PartitionsPerMarker,MaxMarkersPerPop))
   #First level
@@ -126,27 +126,27 @@ count.cells <-function(Thresholds,PartitionsPerMarker,MaxMarkersPerPop,EXPRS,cor
   d<-apply(pops,1,function(x) return (length(which(as.numeric(x)==0))==(l-1)))
   first.level.pheno <- apply(pops[d==T,],1, paste0,sep="",collapse = '')
   first.level.ind<- vector("list",length = length(first.level.pheno))
-  first.level.ind <- parallel::mclapply(first.level.pheno,function(ph) 
-                              return(terminalphenotype (phenotype = ph,  data =  EXPRS,Thresholds = Thresholds)),mc.cores = cores,...)
+  first.level.ind <- parallel::mclapply(first.level.pheno,function(ph)
+    return(terminalphenotype (phenotype = ph,  data =  EXPRS,Thresholds = Thresholds)),mc.cores = cores,...)
   counts <-nrow(EXPRS)
   codes<-paste0(pops[1,],collapse="")
   names(first.level.ind)<- first.level.pheno
   if(verbose)
-{
+  {
     print(paste0("Level 1 done. Identified phenotypes: ", length(first.level.pheno)))
-  each.time<-Sys.time()
+    each.time<-Sys.time()
 
     print(paste0("Running time for level",i1,": " ,each.time-start.time))
-}
- counts<-c(counts,unlist(parallel::mclapply(first.level.ind,length)))
+  }
+  counts<-c(counts,unlist(parallel::mclapply(first.level.ind,length)))
 
   #counts<-c(counts,unlist(parallel::mclapply(first.level.ind,sum,mc.cores = cores,...)))
   codes<-c(codes,first.level.pheno)
   prev.level.ind<-first.level.ind
   if (MaxMarkersPerPop==1)
     return(counts)
-for(i1 in 2:MaxMarkersPerPop)
-#  lapply(2:MaxMarkersPerPop, function(i1)
+  for(i1 in 2:MaxMarkersPerPop)
+    #  lapply(2:MaxMarkersPerPop, function(i1)
   {
 
     d<-apply(pops,1,function(x) return (length(which(as.numeric(x)==0))==(l-i1)))
@@ -162,14 +162,14 @@ for(i1 in 2:MaxMarkersPerPop)
       temp <- rep("0",l)
       #temp[ind[length(ind)]]<-ph2[ind[length(ind)]]
       temp[ind[1]]<-ph2[ind[1]]
-      
+
       first.pheno <- paste0(temp, sep="",collapse = "")
       #colnames(prev.level.ind)==prev.pheno changed to just prev.pheno
- inds <- intersect( prev.level.ind[[prev.pheno]] ,
-      #which(first.level.pheno[,tail(ind,1)]==ph[tail(ind,1)]) changed to first.pheno
-      first.level.ind[[first.pheno]])
-     # inds <- prev.level.ind[[prev.pheno]] &
-       # #which(first.level.pheno[,tail(ind,1)]==ph[tail(ind,1)]) changed to first.pheno
+      inds <- intersect( prev.level.ind[[prev.pheno]] ,
+                         #which(first.level.pheno[,tail(ind,1)]==ph[tail(ind,1)]) changed to first.pheno
+                         first.level.ind[[first.pheno]])
+      # inds <- prev.level.ind[[prev.pheno]] &
+      # #which(first.level.pheno[,tail(ind,1)]==ph[tail(ind,1)]) changed to first.pheno
       #  first.level.ind[[first.pheno]]
       return(inds)
     },mc.cores=cores)
@@ -177,16 +177,16 @@ for(i1 in 2:MaxMarkersPerPop)
       print(paste0("Level ", i1, " done. Identified phenotypes: ", length(curr.level.pheno)))
       each.time<-Sys.time()
 
-    print(paste0("Running time for level",i1,": " ,each.time-start.time))
+      print(paste0("Running time for level",i1,": " ,each.time-start.time))
     }
-system.time({
-    names(curr.level.ind)<- curr.level.pheno
-    codes<-c(codes,curr.level.pheno)
- counts<-c(counts,unlist(parallel::mclapply(curr.level.ind,length)))
-   # counts<-c(counts,unlist(parallel::mclapply(curr.level.ind,sum)))
-    prev.level.ind <- curr.level.ind
-})
-gc(verbose = getOption("verbose"), reset = T)
+    system.time({
+      names(curr.level.ind)<- curr.level.pheno
+      codes<-c(codes,curr.level.pheno)
+      counts<-c(counts,unlist(parallel::mclapply(curr.level.ind,length)))
+      # counts<-c(counts,unlist(parallel::mclapply(curr.level.ind,sum)))
+      prev.level.ind <- curr.level.ind
+    })
+    gc(verbose = getOption("verbose"), reset = T)
   }
   end.time<-Sys.time()
   if (verbose)

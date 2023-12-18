@@ -462,3 +462,5 @@ flowTypeFilter <- function(Frame,
   return(new("Phenotypes", CellFreqs=Counts, PhenoCodes=Codes, MFIs=Means, PropMarkers=PropMarkers, MFIMarkers=MFIMarkers, MarkerNames=MarkerNames, Partitions=Partitions, PartitionsPerMarker=PartitionsPerMarker, Thresholds=Thresholds));
 }
 
+
+
